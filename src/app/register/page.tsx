@@ -54,7 +54,7 @@ export default function SignUpPage() {
       <Card className="w-full max-w-md">
         <CardContent className="space-y-4 pt-6">
           <h1 className="text-2xl font-bold text-center">Create Account</h1>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" >
             <div>
               <Input {...register("fullName")} placeholder="Full Name" />
               {errors.fullName && <p className="text-sm text-red-500">{errors.fullName.message}</p>}
@@ -74,7 +74,7 @@ export default function SignUpPage() {
 
             {error && <p className="text-sm text-red-600 font-semibold text-center">{error}</p>}
 
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
+            <Button type="submit" className="w-full bg-[#FFA500]" disabled={isSubmitting}>
               {isSubmitting ? "Registering..." : "Create Account"}
             </Button>
           </form>

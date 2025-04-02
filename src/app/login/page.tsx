@@ -68,7 +68,7 @@ export default function LoginPage() {
         />
         <button
           type="submit"
-          className="w-full bg-red-600 hover:bg-red-700 py-3 rounded-lg transition"
+          className="w-full bg-[#FFA500] py-3 rounded-lg transition"
         >
           Enter
         </button>

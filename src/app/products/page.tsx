@@ -201,14 +201,14 @@ export default function ProductosPage() {
                 <span>Total</span>
                 <span>${total}</span>
               </div>
-              <Button className="w-full" onClick={confirmOrder}>Confirm purchase</Button>
+              <Button className="w-full bg-[#FFA500]" onClick={confirmOrder}>Confirm purchase</Button>
             </div>
           </motion.aside>
         )}
       </AnimatePresence>
 
       {cart.length > 0 && !open && (
-        <Button onClick={() => setOpen(true)} className="fixed bottom-6 right-6 bg-primary">View cart</Button>
+        <Button onClick={() => setOpen(true)} className="fixed bottom-6 right-6 bg-primary bg-[#FFA500]">View cart</Button>
       )}
     </div>
   );
