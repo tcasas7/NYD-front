@@ -6,6 +6,7 @@ import { PartyPopper, Gift, TicketCheck } from "lucide-react";
 import { useRouter } from 'next/navigation';
 import BenefitCardList from "@/components/benefitCardList";
 import Header from "@/components/header";
+import Link from "next/link";
 
 export default function HomePage() {
   const router = useRouter();
@@ -55,7 +56,11 @@ export default function HomePage() {
       <section className="bg-white rounded-2xl p-8 shadow-lg text-black text-center max-w-xl">
         <h3 className="text-xl font-semibold mb-2">Over 3,000 fans have already joined</h3>
         <p className="mb-4">What are you waiting for?</p>
-        <Button variant="default" size="lg">Join Now</Button>
+      <Link href="/register">
+        <Button variant="default" size="lg">
+           Join Now
+        </Button>
+      </Link>
       </section>
     </div>
   );

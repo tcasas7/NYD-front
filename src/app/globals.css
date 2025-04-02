@@ -45,8 +45,6 @@
 
 :root {
   --radius: 0.625rem;
-  --background: #FFFFFF;
-  --foreground: #010101;
   --card: #FFFFFF;
   --card-foreground: #010101;
   --popover: #FFFFFF;
@@ -76,6 +74,8 @@
   --sidebar-accent-foreground: #FFFFFF;
   --sidebar-border: #FFD100;
   --sidebar-ring: #EF3340;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.141 0.005 285.823);
 }
 
 .dark {
