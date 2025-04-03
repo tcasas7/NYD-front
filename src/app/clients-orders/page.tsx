@@ -5,6 +5,8 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import Header from "@/components/header";
+import { useAuth } from "@/hooks/useAuth"
+import { useRouter } from "next/navigation"
 
 interface Product {
   title: string;
@@ -35,17 +37,32 @@ interface Order {
 
 export default function ClientOrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
+  
+  const { loading, isAuthenticated, role } = useAuth()
+  const router = useRouter()
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      const token = localStorage.getItem("token");
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/orders`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setOrders(res.data);
-    };
-    fetchOrders();
-  }, []);
+    if (!loading) {
+      if (!isAuthenticated || role !== "ADMIN") {
+        router.push("/products") 
+      } else {
+        const fetchOrders = async () => {
+          try {
+            const token = localStorage.getItem("token")
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/orders`, {
+              headers: { Authorization: `Bearer ${token}` },
+            })
+            setOrders(res.data)
+          } catch (err) {
+            console.error("Error fetching orders:", err)
+          }
+        }
+        fetchOrders()
+      }
+    }
+  }, [loading, isAuthenticated, role, router])
+
+  
 
   const updateStatus = async (id: number, status: string) => {
     const token = localStorage.getItem("token");
@@ -92,7 +109,7 @@ export default function ClientOrdersPage() {
                       ${order.total}
                     </td>
                     <td className="px-4 py-2 text-[15px]">
-                      {format(new Date(order.createdAt), "dd/MM/yyyy, h:mm a")}
+                      {format(new Date(order.createdAt), "MM/dd/yyyy, h:mm a")}
                     </td>
                     <td className="px-4 py-2">
                       <div className="flex gap-2">

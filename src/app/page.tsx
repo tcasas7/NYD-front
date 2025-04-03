@@ -11,7 +11,7 @@ import Link from "next/link";
 export default function HomePage() {
   const router = useRouter();
   return (
-    <div className="flex flex-col items-center text-center px-6 pt-32 pb-12 space-y-16">
+    <div className="flex flex-col items-center text-center px-6 pt-25 pb-12 space-y-12">
       <Header />
 
       {/* Hero Section */}

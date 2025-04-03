@@ -9,6 +9,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Trash2, ShoppingCart, Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import Header from "@/components/header";
+import { useAuth } from "@/hooks/useAuth"
+import { toast } from "sonner"
 
 
 
@@ -30,6 +32,8 @@ export default function ProductosPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<{ product: Product; quantity: number }[]>([]);
   const [open, setOpen] = useState(false);
+
+  const { isAuthenticated } = useAuth()
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -73,10 +77,10 @@ export default function ProductosPage() {
 
   const confirmOrder = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token")
       if (!token) {
-        alert("You are not logged in");
-        return;
+        toast.error("You must be logged in to confirm the order")
+        return
       }
   
       const res = await axios.post(
@@ -92,20 +96,20 @@ export default function ProductosPage() {
             Authorization: `Bearer ${token}`,
           },
         }
-      );
+      )
   
       if (res.status === 201) {
-        alert("✅ Order confirmed");
-        setCart([]);
-        setOpen(false);
+        toast.success(" Your order has been successfully placed!")
+        setCart([])
+        setOpen(false)
       } else {
-        alert("❌ Error confirming order");
+        toast.error(" Failed to confirm the order")
       }
     } catch (err) {
-      console.error(err);
-      alert("❌ Error confirming order");
+      console.error(err)
+      toast.error(" Something went wrong while confirming your order")
     }
-  };
+  }
   
   const grouped = products.reduce((acc, product) => {
     const key = product.category.name;
@@ -116,6 +120,14 @@ export default function ProductosPage() {
 
   const getQuantity = (productId: number) => {
     return cart.find(item => item.product.id === productId)?.quantity || 0;
+  };
+
+  const handleAddToCart = (product: Product) => {
+    if (!isAuthenticated) {
+      toast.error("You must log in to add items to the cart")
+      return
+    }
+    addToCart(product)
   };
 
   return (
@@ -152,9 +164,10 @@ export default function ProductosPage() {
                           <Minus className="w-4 h-4" />
                         </Button>
                         <span className="font-semibold w-6 text-center">{quantity}</span>
-                        <Button variant="ghost" size="icon" onClick={() => addToCart(product)}>
+                        <Button variant="ghost" size="icon" onClick={() => handleAddToCart(product)}>
                           <Plus className="w-4 h-4" />
                         </Button>
+
                       </div>
                       <span className="text-green-600 font-bold text-lg">${product.price}</span>
                     </div>

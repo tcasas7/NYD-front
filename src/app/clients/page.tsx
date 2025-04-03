@@ -3,6 +3,8 @@ import Header from "@/components/header";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation'
+import { useAuth } from '@/hooks/useAuth'
 
 
 interface User {
@@ -18,6 +20,9 @@ interface User {
 export default function ClientsPage() {
   const [pendingUsers, setPendingUsers] = useState<User[]>([]);
   const [activeUsers, setActiveUsers] = useState<User[]>([]);
+
+  const router = useRouter()
+  const { loading, isAuthenticated, role } = useAuth()
 
   const fetchUsers = async () => {
     try {
@@ -40,8 +45,14 @@ export default function ClientsPage() {
   };
 
   useEffect(() => {
-    fetchUsers();
-  }, []);
+    if (!loading) {
+      if (!isAuthenticated || role !== 'ADMIN') {
+        router.push('/products') 
+      } else {
+        fetchUsers()
+      }
+    }
+  }, [loading, isAuthenticated, role, router])
 
   return (
 <div className="pt-24 px-6 pl-8 md:pl-20 max-w-7xl space-y-10">
