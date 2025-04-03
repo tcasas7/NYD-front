@@ -78,6 +78,14 @@
   --foreground: oklch(0.141 0.005 285.823);
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+
 .dark {
   --background: #010101;
   --foreground: #FFFFFF;

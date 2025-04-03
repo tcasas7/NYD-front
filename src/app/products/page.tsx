@@ -11,6 +11,7 @@ import Image from "next/image";
 import Header from "@/components/header";
 import { useAuth } from "@/hooks/useAuth"
 import { toast } from "sonner"
+import { FanClubBanner } from "@/components/fanClubBanner";
 
 
 
@@ -131,9 +132,10 @@ export default function ProductosPage() {
   };
 
   return (
-    <div className="relative flex pt-18">
+    <>
+      <main className="flex flex-col flex-1">
       <Header />
-      <div className="flex-1 px-6 py-8">
+      <div className="px-6 pt-24 pb-12 flex-1 text-center space-y-12">
         {Object.entries(grouped).map(([categoryName, items]) => (
           <section key={categoryName} className="mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-6 border-b pb-2">{categoryName}</h2>
@@ -223,6 +225,9 @@ export default function ProductosPage() {
       {cart.length > 0 && !open && (
         <Button onClick={() => setOpen(true)} className="fixed bottom-6 right-6 bg-primary bg-[#FFA500]">View cart</Button>
       )}
-    </div>
+       </main>
+
+    <FanClubBanner />
+    </>
   );
 }

@@ -7,6 +7,7 @@ import { motion } from "framer-motion"
 import Header from "@/components/header"
 import { useAuth } from "@/hooks/useAuth"
 import { useRouter } from "next/navigation"
+import { format } from "date-fns"
 
 interface Product {
   id: number
@@ -65,14 +66,14 @@ export default function OrdersPage() {
   }, [loading, isAuthenticated, role, userId, router])
 
   return (
-    <div className="p-6 max-w-5xl mx-auto space-y-6">
+    <div className="pt-32 p-6 max-w-5xl mx-auto space-y-6">
       <Header />
       <h1 className="text-3xl font-bold text-center text-gray-800">🧾 Order History</h1>
-
+  
       {orders.length === 0 ? (
         <p className="text-center text-muted-foreground">You havent placed any orders yet.</p>
       ) : (
-        orders.map((order) => (
+        [...orders].reverse().map((order) => (
           <motion.div
             key={order.id}
             initial={{ opacity: 0, y: 20 }}
@@ -84,13 +85,13 @@ export default function OrdersPage() {
                 <div className="flex justify-between items-center">
                   <div>
                     <p className="text-sm text-muted-foreground">
-                      Order #{order.id} – {new Date(order.createdAt).toLocaleString()}
+                      {format(new Date(order.createdAt), "MM/dd/yyyy, h:mm a")}
                     </p>
                     <p className="text-base font-semibold">Status: {order.status}</p>
                   </div>
                   <span className="text-xl font-bold text-green-600">${order.total}</span>
                 </div>
-
+  
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {order.items.map(({ product, quantity }) => (
                     <div

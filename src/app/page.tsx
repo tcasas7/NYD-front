@@ -7,11 +7,14 @@ import { useRouter } from 'next/navigation';
 import BenefitCardList from "@/components/benefitCardList";
 import Header from "@/components/header";
 import Link from "next/link";
+import { FanClubBanner } from "@/components/fanClubBanner";
+
 
 export default function HomePage() {
   const router = useRouter();
   return (
-    <div className="flex flex-col items-center text-center px-6 pt-25 pb-12 space-y-12">
+    <>
+   <main className="flex flex-col items-center text-center px-6 pt-25 pb-12 space-y-12 flex-1">
       <Header />
 
       {/* Hero Section */}
@@ -69,6 +72,9 @@ export default function HomePage() {
           </Button>
         </Link>
       </section>
-    </div>
+      </main>
+    <FanClubBanner />
+    </>
+    
   );
 }
